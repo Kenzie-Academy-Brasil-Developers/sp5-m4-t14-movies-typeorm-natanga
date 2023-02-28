@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../data-source';
 import { Movie } from '../entities';
-import { iMoviesRequest, iMoviesResponse } from "../interfaces/movies.Interface";
-import { responseMovieSchema } from '../schemas/movies.schema';
+import { iMovies, iMoviesRequest } from "../interfaces/movies.Interface";
 
-export const createMoviesService = async (dataMovies: iMoviesRequest): Promise<iMoviesResponse> => {
+
+export const createMoviesService = async (dataMovies: iMoviesRequest): Promise<iMovies> => {
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
 
@@ -12,7 +12,5 @@ export const createMoviesService = async (dataMovies: iMoviesRequest): Promise<i
 
     await movieRepository.save(movie);
 
-    const newMovie = responseMovieSchema.parse(movie);
-
-    return newMovie
+    return movie
 }

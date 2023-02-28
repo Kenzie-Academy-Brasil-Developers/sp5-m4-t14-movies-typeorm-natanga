@@ -10,22 +10,13 @@ class Movie {
     name: string;
 
     @Column({ nullable: true, type: 'text' })
-    description?: string | null;
+    description: string | null;
 
     @Column({ width: 4 })
     duration: number;
 
     @Column({ width: 4 })
     price: number;
-
-    @CreateDateColumn()
-    createdAt: string;
-
-    @UpdateDateColumn()
-    updatedAt: string;
-
-    @DeleteDateColumn()
-    deletedAt: string;
 
 }
 

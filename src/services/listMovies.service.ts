@@ -10,7 +10,7 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
     const queryPerPage: number | undefined = Number(perPageReq)
 
     let page: number = queryPage !== undefined && queryPage > 1 ? queryPage : 1
-    const perPage: number = queryPerPage !== undefined && queryPerPage > 0 ? queryPerPage : 5
+    const perPage: number = queryPerPage !== undefined && queryPerPage > 0 && queryPerPage <= 5 ? queryPerPage : 5
 
     const baseUrl: string = `http://localhost:3000/movies`
     const prevPage: string | null = page - 1 < 1 ? null : `${baseUrl}?page=${page - 1}&perPage=${perPage}`
@@ -23,10 +23,10 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
     const order: string = orderReq && keysOrder.includes(String(orderReq)) ? String(orderReq) : "ASC"
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
-
+    
     const findMovies: [Movie[], number] = await movieRepository.findAndCount({
         take: perPage,
-        skip:(page - 1) * page,
+        skip: perPage * (page - 1),
         order: {
             [sort]: order
         }
@@ -34,16 +34,16 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
 
     const findNextMovies: Movie[] = await movieRepository.find({
         take: perPage,
-        skip: page + 1,
-        order: {
-            [sort]: order
-        }
+        skip: perPage * (page + 1)
     })
-    
+
     const movies: iMoviesArray = multiplesMovies.parse(findMovies[0])
 
-    //const nextPage: string | null = movies.next.length <= 0 ? calculyNextPage : null
-    const nextPage: string = calculyNextPage
+    let nextPage: string | null = null;
+
+    if (findNextMovies.length > 0) {
+        nextPage = calculyNextPage;
+    }
 
     const pagination = {
         prevPage,
@@ -51,7 +51,7 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
         count: findMovies[1],
         data: movies
     }
-    
+
 
     return pagination
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { movieCreateSchema } from "../schemas/movies.schema";
-import { iMoviesRequest, iMoviesResponse, } from '../interfaces/movies.Interface'
+import { iMoviesRequest, iMovies } from '../interfaces/movies.Interface'
 import { createMoviesService } from "../services/createMovies.service";
 import { listMoviesService } from "../services/listMovies.service";
 import { deleteMoviesService } from "../services/deleteMovies.service";
@@ -10,7 +10,7 @@ export const createMoviesControlers = async (req: Request, res: Response): Promi
 
     const dataMovies: iMoviesRequest = movieCreateSchema.parse(req.body)
 
-    const newMovie: iMoviesResponse = await createMoviesService(dataMovies)
+    const newMovie: iMovies = await createMoviesService(dataMovies)
 
     return res.status(201).json(newMovie)
 }
