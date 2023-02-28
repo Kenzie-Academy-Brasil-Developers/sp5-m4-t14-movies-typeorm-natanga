@@ -10,4 +10,5 @@ export type iMoviesResponse = z.infer<typeof responseMovieSchema>
 
 export type iMovieUpdate = DeepPartial<iMovies>
 
-export type iMoviesArray= z.infer<typeof multiplesMovies>
+export type iMoviesArray = z.infer<typeof multiplesMovies>
+

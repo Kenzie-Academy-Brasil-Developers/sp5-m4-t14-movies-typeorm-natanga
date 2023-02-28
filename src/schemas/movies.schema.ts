@@ -7,9 +7,9 @@ export const movieSchema = z.object({
     description: z.string().nullable(),
     duration: z.number(),
     price: z.number(),
-    createdAt: z.string().optional(),
-    updatedAt: z.string().optional(),
-    deletedAt: z.string().nullable().optional(),
+    createdAt: z.date().optional(),
+    updatedAt: z.date().optional(),
+    deletedAt: z.date().nullable().optional(),
 });
 
 export const movieCreateSchema = movieSchema.omit({
@@ -25,4 +25,4 @@ export const responseMovieSchema = movieSchema.omit({
     deletedAt: true
 })
 
-export const multiplesMovies = responseMovieSchema.array()
+export const multiplesMovies = movieSchema.array()

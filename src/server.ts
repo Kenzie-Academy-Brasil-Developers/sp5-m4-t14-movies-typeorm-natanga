@@ -1,5 +1,4 @@
 
-import { string } from 'pg-format';
 import app from './app';
 import { AppDataSource } from './data-source';
 
