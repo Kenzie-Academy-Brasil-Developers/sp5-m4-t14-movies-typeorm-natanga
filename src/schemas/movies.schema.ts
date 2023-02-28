@@ -1,18 +1,28 @@
 import { z } from 'zod'
 
-export const moviesSchema = z.object({
+
+export const movieSchema = z.object({
     id: z.number(),
     name: z.string().min(2).max(50),
+    description: z.string().nullable(),
     duration: z.number(),
     price: z.number(),
-    createAt: z.string(),
-    updateAt: z.string(),
-    deletedAt: z.string().optional()
-})
+    createdAt: z.string().optional(),
+    updatedAt: z.string().optional(),
+    deletedAt: z.string().nullable().optional(),
+});
 
-export const requestMoviesSchema = moviesSchema.omit({
+export const requestMovieSchema = movieSchema.omit({
     id: true,
-    createAt: true,
-    updateAt: true,
+    createdAt: true,
+    updatedAt: true,
     deletedAt: true
 })
+
+export const responseMovieSchema = movieSchema.omit({
+    createdAt: true,
+    updatedAt: true,
+    deletedAt: true
+})
+
+export const multiplesMovies = responseMovieSchema.array()

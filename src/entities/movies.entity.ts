@@ -5,10 +5,10 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 50, unique: true, nullable: false })
+    @Column({ length: 50, unique: true })
     name: string;
 
-    @Column()
+    @Column({nullable:true})
     description: string;
 
     @Column({ width:4 })
