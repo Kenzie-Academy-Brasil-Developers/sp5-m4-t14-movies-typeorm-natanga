@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { requestMovieSchema } from "../schemas/movies.schema";
+import { movieCreateSchema } from "../schemas/movies.schema";
 import { iMovies, iMoviesArray, iMoviesRequest, iMoviesResponse } from '../interfaces/movies.Interface'
 import { createMoviesService } from "../services/createMovies.service";
 import { listMoviesService } from "../services/listMovies.service";
@@ -7,7 +7,7 @@ import { deleteMoviesService } from "../services/deleteMovies.service";
 
 export const createMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    // const dataMovies: iMoviesRequest = requestMovieSchema.parse(req.body)
+    // const dataMovies: iMoviesRequest = movieCreateSchema.parse(req.body)
 
     // const newMovie: iMoviesResponse = await createMoviesService(dataMovies)
 
