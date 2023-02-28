@@ -1,33 +1,31 @@
 import { Request, Response } from "express";
-import { requestMovieSchema } from "../schemas/movies.schema";
-import { iMovies, iMoviesArray, iMoviesRequest, iMoviesResponse } from '../interfaces/movies.Interface'
+import { movieCreateSchema } from "../schemas/movies.schema";
+import { iMoviesRequest, iMovies } from '../interfaces/movies.Interface'
 import { createMoviesService } from "../services/createMovies.service";
 import { listMoviesService } from "../services/listMovies.service";
 import { deleteMoviesService } from "../services/deleteMovies.service";
+import { IPagination } from './../interfaces/pagina.interface';
 
 export const createMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    // const dataMovies: iMoviesRequest = requestMovieSchema.parse(req.body)
+    const dataMovies: iMoviesRequest = movieCreateSchema.parse(req.body)
 
-    // const newMovie: iMoviesResponse = await createMoviesService(dataMovies)
+    const newMovie: iMovies = await createMoviesService(dataMovies)
 
-    // return res.status(201).json(newMovie)
-     return res.status(201).json()
+    return res.status(201).json(newMovie)
 }
 
 export const listMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    const limit = req.params
+    const { page, perPage, sort, order } = req.query
 
-    console.log(limit);
-    
-    const movies: iMoviesArray= await listMoviesService()
+    const movies: IPagination = await listMoviesService(page, perPage, sort, order)
 
     return res.status(200).json(movies)
 }
 
 export const updateMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
-
+    //   const movieSchema =    updateMoviesService()
     return res.status(200).json()
 }
 
