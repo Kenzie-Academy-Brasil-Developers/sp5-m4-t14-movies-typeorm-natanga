@@ -12,7 +12,7 @@ export const movieSchema = z.object({
     deletedAt: z.string().nullable().optional(),
 });
 
-export const requestMovieSchema = movieSchema.omit({
+export const movieCreateSchema = movieSchema.omit({
     id: true,
     createdAt: true,
     updatedAt: true,

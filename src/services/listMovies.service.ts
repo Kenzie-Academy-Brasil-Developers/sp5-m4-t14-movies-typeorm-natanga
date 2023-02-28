@@ -8,7 +8,7 @@ export const listMoviesService = async () => {
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
 
-    const findMovies: iMovies[] = await movieRepository.find()
+    const findMovies: Movie[] = await movieRepository.find()
 
     const movies: iMoviesArray = multiplesMovies.parse(findMovies)
 
