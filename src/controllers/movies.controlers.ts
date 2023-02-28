@@ -1,19 +1,39 @@
 import { Request, Response } from "express";
+import { requestMovieSchema } from "../schemas/movies.schema";
+import { iMovies, iMoviesArray, iMoviesRequest, iMoviesResponse } from '../interfaces/movies.Interface'
+import { createMoviesService } from "../services/createMovies.service";
+import { listMoviesService } from "../services/listMovies.service";
+import { deleteMoviesService } from "../services/deleteMovies.service";
 
-const createMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
+export const createMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    return res.status(201).json()
+    // const dataMovies: iMoviesRequest = requestMovieSchema.parse(req.body)
+
+    // const newMovie: iMoviesResponse = await createMoviesService(dataMovies)
+
+    // return res.status(201).json(newMovie)
+     return res.status(201).json()
 }
 
-const listMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
+export const listMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
+
+    const limit = req.params
+
+    console.log(limit);
+    
+    const movies: iMoviesArray= await listMoviesService()
+
+    return res.status(200).json(movies)
+}
+
+export const updateMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
     return res.status(200).json()
 }
-const updateMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    return res.status(200).json()
-}
-const deleteMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
+export const deleteMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    return res.status(200).json()
+    await deleteMoviesService(parseInt(req.params.id))
+
+    return res.status(204).json()
 }
