@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 50, unique: true, nullable: true })
+    @Column({ length: 50, unique: true, nullable: false })
     name: string;
 
     @Column()
@@ -25,7 +25,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
 
     @DeleteDateColumn()
     deletedAt: string
-
+  
 }
 
 export {
