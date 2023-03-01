@@ -19,7 +19,7 @@ export const moviesVerifyExistbyId = async (req: Request, res: Response, next: N
     })
 
     if (!findMovie) {
-        throw new AppError('Movie Not Found',404)
+        throw new AppError('Movie not found',404)
     }
 
     return next()

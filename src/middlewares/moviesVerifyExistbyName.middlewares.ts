@@ -14,7 +14,9 @@ export const moviesVerifyExistbyName = async (req: Request, res: Response, next:
         }
     })
     
-    if (findMovie) {
+    if (findMovie && req.method == "POST") {
+        console.log(findMovie)
+        
         throw new AppError("Movie already exists.",409)
     }
     
