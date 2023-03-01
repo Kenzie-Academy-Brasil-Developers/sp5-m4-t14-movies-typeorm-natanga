@@ -8,17 +8,17 @@ export const moviesVerifyExistbyName = async (req: Request, res: Response, next:
 
     const movieRopository: Repository<Movie> = AppDataSource.getRepository(Movie);
 
-    const findMovie = await movieRopository.findOne({
-        where: {
-            name:req.body.name
+    if (req.body.name) {
+        const findMovie = await movieRopository.findOne({
+            where: {
+                name: req.body.name
+            }
+        })
+        if (findMovie) {
+            throw new AppError("Movie already exists.", 409)
         }
-    })
-    
-    if (findMovie && req.method == "POST") {
-        console.log(findMovie)
-        
-        throw new AppError("Movie already exists.",409)
     }
-    
+
+
     return next()
 }

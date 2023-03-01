@@ -4,7 +4,7 @@ import { Movie } from "../entities"
 import { iMoviesArray } from "../interfaces/movies.Interface";
 import { multiplesMovies } from "../schemas/movies.schema";
 
-export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: any, orderReq: any) => {
+export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: string, orderReq: string) => {
 
     const queryPage: number | undefined = Number(pageReq)
     const queryPerPage: number | undefined = Number(perPageReq)
@@ -19,11 +19,11 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
     const keysShort: string[] = ['id', 'name', 'description', 'duration', 'price', 'createdAt', 'updatedAt', 'deletedAt']
     const keysOrder: string[] = ['ASC', 'DESC']
 
-    const sort: string = sortReq && keysShort.includes(String(sortReq)) ? String(sortReq) : "id"
-    const order: string = orderReq && keysOrder.includes(String(orderReq)) ? String(orderReq) : "ASC"
+    const sort: string = sortReq && keysShort.includes(sortReq) ? sortReq : "id"
+    const order: string = orderReq && keysOrder.includes(orderReq) && keysShort.includes(sortReq) ? orderReq : "ASC"
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
-    
+
     const findMovies: [Movie[], number] = await movieRepository.findAndCount({
         take: perPage,
         skip: perPage * (page - 1),
@@ -34,9 +34,9 @@ export const listMoviesService = async (pageReq: any, perPageReq: any, sortReq: 
 
     const findNextMovies: Movie[] = await movieRepository.find({
         take: perPage,
-        skip: perPage * (page + 1)
+        skip: perPage * (page)
     })
-
+    
     const movies: iMoviesArray = multiplesMovies.parse(findMovies[0])
 
     let nextPage: string | null = null;
