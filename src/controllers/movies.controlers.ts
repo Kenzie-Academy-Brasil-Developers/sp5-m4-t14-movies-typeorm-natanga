@@ -9,9 +9,7 @@ import { updateMoviesService } from "../services/updateMovies.service";
 
 export const createMoviesControlers = async (req: Request, res: Response): Promise<Response> => {
 
-    const dataMovies: iMoviesRequest = movieCreateSchema.parse(req.body)
-
-    const newMovie: iMovies = await createMoviesService(dataMovies)
+    const newMovie: iMovies = await createMoviesService(req.body)
 
     return res.status(201).json(newMovie)
 }
@@ -20,7 +18,7 @@ export const listMoviesControlers = async (req: Request, res: Response): Promise
 
     const { page, perPage, sort, order } = req.query
 
-    const movies: IPagination = await listMoviesService(page, perPage, sort, order)
+    const movies: IPagination = await listMoviesService(page, perPage, String(sort), String(order)?.toUpperCase())
 
     return res.status(200).json(movies)
 }

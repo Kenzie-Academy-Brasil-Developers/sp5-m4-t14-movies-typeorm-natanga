@@ -1,5 +1,5 @@
-import { text } from "stream/consumers";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+import { Column,  Entity, PrimaryGeneratedColumn  } from "typeorm";
 
 @Entity("movies")
 class Movie {
@@ -10,7 +10,7 @@ class Movie {
     name: string;
 
     @Column({ nullable: true, type: 'text' })
-    description: string | null;
+    description?: string | null|undefined;
 
     @Column({ width: 4 })
     duration: number;

@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Movie } from '../entities';
 import { AppDataSource } from "../data-source";
 
-export const updateMoviesService = async (moviesData: iMovieUpdate, idMovie: number): Promise<Movie> => {
+export const updateMoviesService = async (moviesData: iMovieUpdate, idMovie: number): Promise<iMovies> => {
 
     const moviesRepository: Repository<Movie> = AppDataSource.getRepository(Movie);
 
@@ -11,12 +11,11 @@ export const updateMoviesService = async (moviesData: iMovieUpdate, idMovie: num
         id: idMovie
     })
 
-    const movie = moviesRepository.create({
-        ...moviesData,
-        ...oldUser
+    const movie = await moviesRepository.save({
+        ...oldUser,
+        ...moviesData
     })
 
-    await moviesRepository.save(movie)
 
     return movie
 
